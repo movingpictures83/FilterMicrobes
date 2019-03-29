@@ -1,7 +1,7 @@
 import sys
 import numpy
 import random
-import Queue
+import queue
 
 # Scaling is done to make median=1
 class FilterMicrobesPlugin:
@@ -25,19 +25,19 @@ class FilterMicrobesPlugin:
       # Note assumes microbes, followed by metabolites
       metaboliteIndex = -1
       for i in range(len(self.bacteria)):
-         print self.bacteria[i]
+         #print self.bacteria[i]
          if (self.bacteria[i][1] == 'X' and self.bacteria[i][2].isdigit()):
             metaboliteIndex = i
             break
-      print "METABOLITEINDEX: ", metaboliteIndex
+      #print "METABOLITEINDEX: ", metaboliteIndex
 
       # Assemble adjacency matrix as normal
       self.n = len(self.bacteria)
       self.ADJ = []#numpy.zeros([self.m, self.n])
       self.ADJ2 = []
       i = 0
-      print "M: ", self.m
-      print "N: ", self.n
+      #print "M: ", self.m
+      #print "N: ", self.n
       for i in range(self.m):
             self.ADJ.append([])
             self.ADJ2.append([])
@@ -72,7 +72,7 @@ class FilterMicrobesPlugin:
             for j in range(0, metaboliteIndex):
                #print "CHECKING ", i, " AND ", j, ":",
                if (self.ADJ[i][j] != 0 and self.ADJ2[i][j] == 0 and self.isReachable(i, j)):
-                  print "PUTTING BACK ", i, " ", j
+                  #print "PUTTING BACK ", i, " ", j
                   self.ADJ2[i][j] = self.ADJ[i][j]
                   self.ADJ2[j][i] = self.ADJ2[j][i]
                   flag = False
@@ -104,12 +104,12 @@ class FilterMicrobesPlugin:
          for i in range(0, self.n):
             visited.append(False)
 
-         queue = Queue.Queue()
+         q = queue.Queue()
          visited[s] = True
-         queue.put(s)
+         q.put(s)
 
-         while (not queue.empty()):
-            s = queue.get()
+         while (not q.empty()):
+            s = q.get()
             for i in range(len(self.ADJ2[s])):
                if (self.ADJ2[s][i] != 0):
                   if (i == d):
@@ -117,7 +117,7 @@ class FilterMicrobesPlugin:
                   else:
                      if (not visited[i]):
                         visited[i] = True
-                        queue.put(i)
+                        q.put(i)
 
       return False
 
