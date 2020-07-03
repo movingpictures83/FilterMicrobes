@@ -2,7 +2,8 @@
 # Language: Python
 # Input: CSV (file to be filtered)
 # Output: CSV (filtered values)
-# Tested with: PluMA 1.0, Python 3.6
+# Tested with: PluMA 1.1, Python 3.6
+# Dependency: numpy==1.16.0
 
 PluMA plugin that accepts a CSV file representing a multi-omics network,
 with nodes represented by both rows and columns and entry (i, j) the weight
